@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .question {
+            margin-bottom: 1rem;
+        }
+    </style>
+    <title>Salutogenic River Questionnaire</title>
+</head>
+<body>
+    <h1>Salutogenic River Questionnaire</h1>
+    <form id="questionnaire">
+        <!-- Questions will be inserted here by JavaScript -->
+    </form>
+    <button onclick="calculateScores()">Submit</button>
+    <div id="results"></div>
+    <script>
+        const questions = [
+            { text: 'Do you often feel overwhelmed by disorganization or clutter in your environment?', category: 'chaos' },
+    { text: 'Do you feel a strong sense of coherence in your life?', category: 'balance' },
+    { text: 'Do you find it easy to predict what will happen next in your life?', category: 'balance' },
+    { text: 'Do you have a clear understanding of what you want to achieve in life?', category: 'balance' },
+    { text: 'Do you feel a strong sense of belonging in your social circle?', category: 'balance' },
+    { text: 'Do unexpected changes in your life cause you significant distress?', category: 'chaos' },
+    { text: 'Do you prefer to follow strict routines?', category: 'rigidity' },
+    { text: 'Do you have a strong support system?', category: 'balance' },
+    { text: 'Do you find it difficult to adapt to new situations?', category: 'chaos' },
+    { text: 'Do you believe that you have the resources to cope with the challenges life throws at you?', category: 'balance' },
+    { text: 'Do you feel satisfied with your current level of personal growth?', category: 'balance' },
+    { text: 'Do you often find yourself in conflict with others because of your inflexible thinking?', category: 'chaos' },
+    { text: 'Do you struggle to make decisions?', category: 'rigidity' },
+    { text: 'Do you feel a strong sense of purpose in your life?', category: 'balance' },
+    { text: 'Do you frequently follow rules or guidelines without questioning their purpose?', category: 'rigidity' },
+    { text: 'Do you feel that you have a strong sense of self-identity?', category: 'balance' },
+    { text: 'Do you feel that you can easily manage the challenges that life presents?', category: 'balance' },
+    { text: 'Do you struggle to find meaning in your daily activities?', category: 'chaos' },
+    { text: 'Do you find it difficult to express your emotions?', category: 'rigidity' },
+    { text: 'Do you often feel overwhelmed by your emotions?', category: 'chaos' },
+    { text: 'Do you feel that you need to control every aspect of your life?', category: 'rigidity' },
+    { text: 'Do you find it difficult to let go of control?', category: 'chaos' },
+    { text: 'Do you feel that you can trust others easily?', category: 'balance' },
+    { text: 'Do you find it difficult to trust your own judgment?', category: 'chaos' },
+    { text: 'Do you often feel trapped by your own thoughts?', category: 'rigidity' },
+    { text: 'Do you believe that you have a strong sense of self-worth?', category: 'balance' },
+    { text: 'Do you struggle to communicate your needs and desires?', category: 'rigidity' },
+    { text: 'Do you feel confident in your ability to manage stress?', category: 'balance' },
+    { text: 'Do you feel that you can maintain a healthy work-life balance?', category: 'balance' },
+    { text: 'Do you often feel that your life is out of control?', category: 'chaos' },
+        ];
+
+        const questionnaire = document.getElementById('questionnaire');
+
+        questions.forEach((question, index) => {
+            const questionElement = document.createElement('div');
+            questionElement.className = 'question';
+
+            const questionLabel = document.createElement('label');
+            questionLabel.textContent = `${index + 1}. ${question.text}`;
+            questionElement.appendChild(questionLabel);
+
+            const selectElement = document.createElement('select');
+            selectElement.name = `question${index}`;
+            selectElement.required = true;
+            for (let i = 0; i <= 5; i++) {
+                const optionElement = document.createElement('option');
+                optionElement.value = i;
+                optionElement.textContent = i;
+                selectElement.appendChild(optionElement);
+            }
+            questionElement.appendChild(selectElement);
+
+            questionnaire.appendChild(questionElement);
+        });
+
+        function calculateScores() {
+            const scores = {
+                chaos: 0,
+                rigidity: 0,
+                balance: 0
+            };
+
+            questions.forEach((question, index) => {
+                const questionElement = document.getElementsByName(`question${index}`)[0];
+                scores[question.category] += parseInt(questionElement.value);
+            });
+
+            const results = document.getElementById('results');
+            results.innerHTML = `
+                <h2>Results</h2>
+                <p>Chaos-related score: ${scores.chaos}</p>
+                <p>Rigidity-related score: ${scores.rigidity}</p>
+                <p>Balance-related score: ${scores.balance}</p>
+            `;
+        }
+    </script>
+</body>
+</html>
